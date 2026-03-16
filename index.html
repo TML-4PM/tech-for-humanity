@@ -3,177 +3,452 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Tech for Humanity — AI Research & Advisory for Human Outcomes</title>
+  <title>Tech 4 Humanity — Autonomous AI Holding Company · Sydney, Australia</title>
+  <meta name="description" content="Tech 4 Humanity (T4H) is an autonomous AI holding company operating 28 businesses across 5 groups. AI research, IP, and commercial ventures — Sydney, Australia.">
+  <meta property="og:title" content="Tech 4 Humanity">
+  <meta property="og:description" content="Autonomous AI holding company · 28 businesses · 5 groups · Sydney, AU">
+  <meta property="og:url" content="https://tech4humanity.com.au">
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
     :root{
-      --primary:#1a3a5c;
-      --deep:#0d1f33;
-      --light:#3a6491;
-      --accent:#4db8d4;
+      --navy:#0d1f33;
+      --navy2:#1a3a5c;
+      --navy3:#2a5278;
+      --teal:#4db8d4;
+      --teal2:#38a3be;
       --bg:#f4f8fc;
       --white:#ffffff;
       --text:#1a1a2e;
-      --muted:#666;
+      --muted:#64748b;
+      --border:#e2e8f0;
+      --card:#ffffff;
     }
+    html{scroll-behavior:smooth}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-    a{color:var(--accent);text-decoration:none}
+    a{color:var(--teal);text-decoration:none}
 
     /* NAV */
-    nav{background:var(--deep);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-    .nav-logo{color:var(--white);font-weight:700;font-size:1.1rem;letter-spacing:-0.02em}
-    .nav-logo span{color:var(--accent)}
-    .nav-cta{background:var(--accent);color:var(--deep)!important;padding:0.5rem 1.2rem;border-radius:4px;font-weight:600;font-size:0.85rem}
+    nav{background:var(--navy);padding:0 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;height:60px;border-bottom:1px solid rgba(255,255,255,0.06)}
+    .nav-logo{color:var(--white);font-weight:800;font-size:1rem;letter-spacing:-0.02em;display:flex;align-items:center;gap:0.5rem}
+    .nav-logo .t4h{color:var(--teal)}
+    .nav-logo .divider{opacity:0.3;margin:0 0.3rem}
+    .nav-links{display:flex;align-items:center;gap:2rem}
+    .nav-links a{color:rgba(255,255,255,0.7);font-size:0.85rem;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--white)}
+    .nav-cta{background:var(--teal);color:var(--navy)!important;padding:0.45rem 1.1rem;border-radius:4px;font-weight:700;font-size:0.8rem;letter-spacing:0.02em}
+    @media(max-width:640px){.nav-links{display:none}}
 
     /* HERO */
-    .hero{background:linear-gradient(135deg,var(--deep) 0%,var(--primary) 100%);color:var(--white);padding:5rem 2rem 4rem;text-align:center}
-    .hero-tag{background:var(--accent);color:var(--deep);font-size:0.7rem;font-weight:700;letter-spacing:0.1em;padding:0.3rem 0.8rem;border-radius:20px;display:inline-block;margin-bottom:1.5rem;text-transform:uppercase}
-    .hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:1rem}
-    .hero h1 em{color:var(--accent);font-style:normal}
-    .hero-desc{font-size:1.1rem;opacity:0.85;max-width:680px;margin:0 auto 2.5rem}
-    .btn-primary{background:var(--accent);color:var(--deep);padding:0.9rem 2.2rem;border-radius:6px;font-weight:700;font-size:0.95rem;border:none;cursor:pointer;letter-spacing:0.02em;display:inline-block;transition:opacity 0.2s}
-    .btn-primary:hover{opacity:0.85}
-    .btn-outline{background:transparent;color:var(--white);padding:0.9rem 2.2rem;border-radius:6px;font-weight:600;font-size:0.95rem;border:2px solid rgba(255,255,255,0.3);cursor:pointer;margin-left:1rem}
+    .hero{background:linear-gradient(150deg,var(--navy) 0%,#0f2847 40%,#1a3a5c 100%);color:var(--white);padding:6rem 2rem 5rem;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%, rgba(77,184,212,0.07) 0%, transparent 60%);pointer-events:none}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(77,184,212,0.12);border:1px solid rgba(77,184,212,0.25);color:var(--teal);font-size:0.7rem;font-weight:700;letter-spacing:0.12em;padding:0.35rem 0.9rem;border-radius:20px;margin-bottom:1.5rem;text-transform:uppercase}
+    .hero-eyebrow span{width:6px;height:6px;background:var(--teal);border-radius:50%;display:inline-block;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+    .hero h1{font-size:clamp(2.2rem,5.5vw,4rem);font-weight:800;letter-spacing:-0.04em;line-height:1.05;margin-bottom:1.2rem;max-width:800px;margin-left:auto;margin-right:auto}
+    .hero h1 em{color:var(--teal);font-style:normal}
+    .hero-sub{font-size:1.1rem;opacity:0.75;max-width:580px;margin:0 auto 2.5rem;line-height:1.7}
     .hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+    .btn-primary{background:var(--teal);color:var(--navy);padding:0.85rem 2rem;border-radius:6px;font-weight:700;font-size:0.9rem;border:none;cursor:pointer;letter-spacing:0.02em;display:inline-block;transition:opacity 0.2s}
+    .btn-primary:hover{opacity:0.88}
+    .btn-ghost{background:transparent;color:var(--white);padding:0.85rem 2rem;border-radius:6px;font-weight:600;font-size:0.9rem;border:1px solid rgba(255,255,255,0.25);cursor:pointer;display:inline-block;transition:border-color 0.2s}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.6)}
 
-    /* STATS */
-    .stats{background:var(--white);padding:2rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
-    .stat{text-align:center}
-    .stat-num{font-size:1.8rem;font-weight:800;color:var(--primary)}
-    .stat-label{font-size:0.75rem;color:var(--muted);letter-spacing:0.05em;text-transform:uppercase}
+    /* STAT BAR */
+    .stat-bar{background:var(--navy2);border-bottom:1px solid rgba(255,255,255,0.06);padding:1.2rem 2rem;display:flex;justify-content:center;gap:0;flex-wrap:wrap}
+    .stat-item{text-align:center;padding:0.5rem 2.5rem;border-right:1px solid rgba(255,255,255,0.1)}
+    .stat-item:last-child{border-right:none}
+    .stat-num{font-size:1.6rem;font-weight:800;color:var(--white);letter-spacing:-0.03em;line-height:1}
+    .stat-num span{color:var(--teal)}
+    .stat-label{font-size:0.65rem;color:rgba(255,255,255,0.5);letter-spacing:0.1em;text-transform:uppercase;margin-top:0.2rem}
+    @media(max-width:640px){.stat-item{padding:0.5rem 1.2rem}}
 
-    /* SERVICES */
-    .section{padding:4rem 2rem;max-width:1100px;margin:0 auto}
-    .section-tag{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.5rem}
-    .section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.02em;color:var(--deep);margin-bottom:0.5rem}
-    .section-sub{color:var(--muted);margin-bottom:3rem;max-width:600px}
-    .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}
-    .svc-card{background:var(--white);border-radius:12px;padding:1.8rem;box-shadow:0 2px 12px rgba(0,0,0,0.06);transition:transform 0.2s,box-shadow 0.2s}
-    .svc-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,0.1)}
-    .svc-icon{font-size:2rem;margin-bottom:0.8rem}
-    .svc-name{font-weight:700;font-size:1rem;color:var(--deep);margin-bottom:0.4rem}
-    .svc-desc{font-size:0.875rem;color:var(--muted);line-height:1.5}
+    /* SECTIONS */
+    .section{padding:5rem 2rem;max-width:1100px;margin:0 auto}
+    .section-eyebrow{font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal);margin-bottom:0.5rem}
+    .section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:800;letter-spacing:-0.03em;color:var(--navy);margin-bottom:0.6rem;line-height:1.1}
+    .section-sub{color:var(--muted);max-width:560px;font-size:0.95rem;line-height:1.7}
 
-    /* CTA BAND */
-    .cta-band{background:linear-gradient(135deg,var(--primary),var(--light));color:var(--white);padding:4rem 2rem;text-align:center}
-    .cta-band h2{font-size:1.8rem;font-weight:800;margin-bottom:0.8rem}
-    .cta-band p{opacity:0.85;margin-bottom:2rem;max-width:500px;margin-left:auto;margin-right:auto}
+    /* PORTFOLIO */
+    .portfolio-wrap{margin-top:3rem}
+    .group-block{margin-bottom:3rem}
+    .group-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+    .group-tag{background:var(--navy);color:var(--teal);font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.75rem;border-radius:4px}
+    .group-name{font-size:1rem;font-weight:700;color:var(--navy);letter-spacing:-0.01em}
+    .group-desc{font-size:0.8rem;color:var(--muted);margin-left:auto}
+    .biz-grid{display:flex;flex-wrap:wrap;gap:0.6rem}
+    .biz-chip{background:var(--card);border:1px solid var(--border);border-radius:6px;padding:0.4rem 0.85rem;font-size:0.8rem;font-weight:600;color:var(--navy2);display:flex;align-items:center;gap:0.4rem;transition:border-color 0.2s,box-shadow 0.2s}
+    .biz-chip:hover{border-color:var(--teal);box-shadow:0 2px 8px rgba(77,184,212,0.15)}
+    .biz-chip .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+    .dot-active{background:#22c55e}
+    .dot-hold{background:#94a3b8}
+
+    /* RESEARCH */
+    .research-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-top:2.5rem}
+    .research-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.8rem;transition:box-shadow 0.2s}
+    .research-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+    .rc-icon{font-size:1.8rem;margin-bottom:0.8rem}
+    .rc-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:0.4rem}
+    .rc-body{font-size:0.85rem;color:var(--muted);line-height:1.6}
+    .rc-metric{margin-top:0.8rem;font-size:0.8rem;font-weight:700;color:var(--teal)}
+
+    /* INFRA */
+    .infra-strip{background:var(--navy);padding:4rem 2rem;margin:0}
+    .infra-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+    @media(max-width:768px){.infra-inner{grid-template-columns:1fr;gap:2rem}}
+    .infra-text .section-eyebrow,.infra-text .section-title,.infra-text .section-sub{color:rgba(255,255,255,0.9)}
+    .infra-text .section-title{color:var(--white)}
+    .infra-text .section-sub{color:rgba(255,255,255,0.6)}
+    .infra-stack{display:flex;flex-direction:column;gap:0.75rem}
+    .stack-row{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:0.75rem 1rem;display:flex;align-items:center;gap:0.75rem}
+    .stack-label{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.08em;text-transform:uppercase;flex-shrink:0;width:80px}
+    .stack-val{font-size:0.8rem;color:rgba(255,255,255,0.85);font-weight:600;font-family:monospace}
+    .stack-badge{margin-left:auto;background:rgba(77,184,212,0.15);color:var(--teal);font-size:0.65rem;font-weight:700;padding:0.2rem 0.5rem;border-radius:4px;letter-spacing:0.05em}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 2fr;gap:3rem;align-items:start;margin-top:2.5rem}
+    @media(max-width:768px){.about-grid{grid-template-columns:1fr}}
+    .about-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:2rem;text-align:center}
+    .about-avatar{width:80px;height:80px;background:linear-gradient(135deg,var(--navy),var(--navy2));border-radius:50%;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem}
+    .about-name{font-size:1.1rem;font-weight:800;color:var(--navy);margin-bottom:0.2rem}
+    .about-role{font-size:0.8rem;color:var(--muted)}
+    .about-badges{margin-top:1rem;display:flex;flex-direction:column;gap:0.4rem}
+    .about-badge{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:0.3rem 0.6rem;font-size:0.7rem;font-weight:600;color:var(--navy2);text-align:center}
+    .about-body p{font-size:0.95rem;color:var(--muted);line-height:1.8;margin-bottom:1rem}
+    .about-body p:last-child{margin-bottom:0}
 
     /* CONTACT */
-    .contact-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;max-width:900px;margin:0 auto}
-    @media(max-width:640px){.contact-wrap{grid-template-columns:1fr}}
-    .form-group{margin-bottom:1rem}
-    .form-group label{display:block;font-size:0.8rem;font-weight:600;color:var(--deep);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.05em}
-    .form-group input,.form-group select,.form-group textarea{width:100%;padding:0.75rem;border:1px solid #ddd;border-radius:6px;font-size:0.9rem;outline:none;transition:border 0.2s}
-    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--primary)}
-    .form-group textarea{height:100px;resize:vertical}
-    .form-submit{width:100%;background:var(--primary);color:var(--white);padding:1rem;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.95rem}
-    .contact-info h3{font-size:1.2rem;font-weight:700;color:var(--deep);margin-bottom:1.5rem}
-    .contact-item{display:flex;gap:0.8rem;margin-bottom:1rem;align-items:flex-start}
-    .contact-item-icon{font-size:1.2rem;margin-top:0.1rem}
-    .contact-item-text{font-size:0.9rem;color:var(--muted)}
-    .contact-item-label{font-weight:600;color:var(--deep);font-size:0.85rem}
+    .contact-bg{background:linear-gradient(150deg,var(--navy) 0%,var(--navy2) 100%);padding:5rem 2rem}
+    .contact-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem}
+    @media(max-width:640px){.contact-inner{grid-template-columns:1fr}}
+    .contact-inner .section-eyebrow,.contact-inner .section-title{color:rgba(255,255,255,0.9)}
+    .contact-inner .section-title{color:var(--white)}
+    .contact-inner .section-sub{color:rgba(255,255,255,0.55)}
+    .contact-details{margin-top:2rem;display:flex;flex-direction:column;gap:0.75rem}
+    .cd-row{display:flex;align-items:center;gap:0.75rem}
+    .cd-icon{font-size:1rem;width:24px;text-align:center}
+    .cd-text{font-size:0.85rem;color:rgba(255,255,255,0.65)}
+    .cd-text strong{color:rgba(255,255,255,0.9);display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:0.06em}
+    .form-group{margin-bottom:0.85rem}
+    .form-group label{display:block;font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.5);margin-bottom:0.3rem;text-transform:uppercase;letter-spacing:0.08em}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:0.7rem 0.9rem;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;font-size:0.875rem;outline:none;color:var(--white);transition:border-color 0.2s}
+    .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.3)}
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--teal)}
+    .form-group textarea{height:90px;resize:vertical}
+    .form-submit{width:100%;background:var(--teal);color:var(--navy);padding:0.85rem;border:none;border-radius:6px;font-weight:700;cursor:pointer;font-size:0.9rem;letter-spacing:0.02em;margin-top:0.5rem;transition:opacity 0.2s}
+    .form-submit:hover{opacity:0.88}
+    .success-banner{display:none;background:rgba(34,197,94,0.12);border:1px solid rgba(34,197,94,0.3);color:#4ade80;padding:0.8rem 1rem;border-radius:6px;margin-bottom:0.75rem;font-size:0.85rem;font-weight:600}
 
     /* FOOTER */
-    footer{background:var(--deep);color:rgba(255,255,255,0.6);padding:2rem;text-align:center;font-size:0.8rem}
-    footer strong{color:var(--white)}
-
-    /* SUCCESS */
-    .success-banner{display:none;background:#d4edda;border:1px solid #c3e6cb;color:#155724;padding:1rem 1.5rem;border-radius:8px;margin-bottom:1rem;font-weight:600}
+    footer{background:var(--navy);border-top:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.4);padding:1.5rem 2rem;text-align:center;font-size:0.78rem}
+    footer strong{color:rgba(255,255,255,0.7)}
+    .footer-links{display:flex;justify-content:center;gap:1.5rem;margin-top:0.5rem;flex-wrap:wrap}
+    .footer-links a{color:rgba(255,255,255,0.35);font-size:0.75rem;transition:color 0.2s}
+    .footer-links a:hover{color:rgba(255,255,255,0.7)}
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="nav-logo">Tech <span>forHumanity</span></div>
-  <a href="#contact" class="nav-cta">Request a Briefing</a>
+  <div class="nav-logo">
+    <span class="t4h">T4H</span>
+    <span class="divider">|</span>
+    Tech 4 Humanity
+  </div>
+  <div class="nav-links">
+    <a href="#portfolio">Portfolio</a>
+    <a href="#research">Research</a>
+    <a href="#infrastructure">Infrastructure</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Request a Briefing</a>
+  </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-tag">T4H Portfolio · CORE</div>
-  <h1>Tech for Humanity<br><em>AI Research & Advisory for Human Outcomes</em></h1>
-  <p class="hero-desc">Tech for Humanity (T4H) is Australia's leading AI research and advisory firm focused on neurodiversity, workforce productivity, and the ethical application of artificial intelligence. We turn research...</p>
+  <div class="hero-eyebrow"><span></span>Autonomous AI Holding Company · Sydney, AU</div>
+  <h1>28 Businesses.<br><em>One Autonomous Stack.</em></h1>
+  <p class="hero-sub">Tech 4 Humanity is an AI-native holding company operating a portfolio of 28 canonical businesses across research, commercial, and social impact verticals — powered by a fully autonomous execution spine.</p>
   <div class="hero-btns">
     <a href="#contact" class="btn-primary">Request a Briefing</a>
-    <a href="#services" class="btn-outline">Learn More</a>
+    <a href="#portfolio" class="btn-ghost">View Portfolio</a>
   </div>
 </section>
 
-<div class="stats">
-  <div class="stat"><div class="stat-num">T4H</div><div class="stat-label">Portfolio Company</div></div>
-  <div class="stat"><div class="stat-num">CORE</div><div class="stat-label">Business Group</div></div>
-  <div class="stat"><div class="stat-num">AU</div><div class="stat-label">Based in Australia</div></div>
-  <div class="stat"><div class="stat-num">2025</div><div class="stat-label">Active</div></div>
+<div class="stat-bar">
+  <div class="stat-item">
+    <div class="stat-num">28</div>
+    <div class="stat-label">Businesses</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">5</div>
+    <div class="stat-label">Groups</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">4,247<span>+</span></div>
+    <div class="stat-label">Research Participants</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">$2.56<span>M</span></div>
+    <div class="stat-label">RDTI Position</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">L23</div>
+    <div class="stat-label">Autonomy Level</div>
+  </div>
 </div>
 
-<section class="section" id="services">
-  <div class="section-tag">What We Do</div>
-  <h2 class="section-title">Our Services</h2>
-  <p class="section-sub">Tech for Humanity (T4H) is Australia's leading AI research and advisory firm focused on neurodiversity, workforce productivity, and the ethical application of artificial intelligence. We turn research into deployable advantage.</p>
-  <div class="svc-grid">
-        <div class="svc-card">
-          <div class="svc-icon">🔬</div>
-          <div class="svc-name">AI Research & Reports</div>
-          <div class="svc-desc">Peer-reviewed AI research with commercial application — neurodiversity, productivity, and workforce intelligence.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-icon">🧭</div>
-          <div class="svc-name">Advisory & Consulting</div>
-          <div class="svc-desc">Strategic AI advisory for enterprise and government. We translate cutting-edge research into implementable roadmaps.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-icon">🎙️</div>
-          <div class="svc-name">Keynotes & Workshops</div>
-          <div class="svc-desc">Engaging, evidence-based keynotes on AI adoption, neurodiversity in the workforce, and human-AI collaboration.</div>
-        </div>
-        <div class="svc-card">
-          <div class="svc-icon">📦</div>
-          <div class="svc-name">Product Licensing</div>
-          <div class="svc-desc">License T4H's proprietary frameworks, assessments, and AI tools for your organisation.</div>
-        </div></div>
+<section class="section" id="portfolio">
+  <div class="section-eyebrow">Portfolio</div>
+  <h2 class="section-title">28 Canonical Businesses</h2>
+  <p class="section-sub">Across 5 groups — CORE, SIGNAL, MISSION, RETAIL, and FUN. 6 operating at full autonomy (L23). 22 in activation queue.</p>
+
+  <div class="portfolio-wrap">
+    <div class="group-block">
+      <div class="group-header">
+        <span class="group-tag">CORE</span>
+        <span class="group-name">Foundational Businesses</span>
+        <span class="group-desc">4 businesses · All ACTIVE at L23</span>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-chip"><span class="dot dot-active"></span>Tech 4 Humanity</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>WorkFamilyAI</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>Augmented Humanity Coach</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>HoloOrg</div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <div class="group-header">
+        <span class="group-tag">SIGNAL</span>
+        <span class="group-name">IP & Research Assets</span>
+        <span class="group-desc">8 businesses · Patent clusters · BCI/neural research</span>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-chip"><span class="dot dot-active"></span>GC-BAT</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>ConsentX</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>Far-Cage</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>MyNeuralSignal</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>NEUROPAK</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>RATPAK</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>LifeGraph+</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>AI-Olympics</div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <div class="group-header">
+        <span class="group-tag">MISSION</span>
+        <span class="group-name">Social Impact</span>
+        <span class="group-desc">5 businesses · Defence · Health · Environment</span>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-chip"><span class="dot dot-active"></span>OutcomeReady</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>MissionCritical</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>SmartPark</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>MedLedger</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>AquaMe</div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <div class="group-header">
+        <span class="group-tag">RETAIL</span>
+        <span class="group-name">Commerce & Marketplaces</span>
+        <span class="group-desc">6 businesses · Stripe wired · B2B & B2C</span>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-chip"><span class="dot dot-active"></span>EnterAU</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>APAC-JWO</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>VuonTroi</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>JustPoint</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>XCES</div>
+        <div class="biz-chip"><span class="dot dot-hold"></span>HouseOfBiscuits</div>
+      </div>
+    </div>
+
+    <div class="group-block">
+      <div class="group-header">
+        <span class="group-tag">FUN</span>
+        <span class="group-name">Consumer & Viral</span>
+        <span class="group-desc">5 businesses · Content · Community · Apps</span>
+      </div>
+      <div class="biz-grid">
+        <div class="biz-chip"><span class="dot dot-active"></span>ApexPredator</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>ExtremeSpotto</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>AIOopsies</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>RhythmMethod</div>
+        <div class="biz-chip"><span class="dot dot-active"></span>GirlMath</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<div class="cta-band">
-  <h2>Ready to get started?</h2>
-  <p>Talk to the Tech for Humanity team today. We'll respond within 24 hours.</p>
-  <a href="#contact" class="btn-primary" style="color:var(--deep)">Request a Briefing</a>
+<section class="section" id="research">
+  <div class="section-eyebrow">Research & IP</div>
+  <h2 class="section-title">AI Sweet Spots & Core IP</h2>
+  <p class="section-sub">T4H operates the largest proprietary neurodiversity-AI productivity research programme in Australia, with registered R&D activities anchoring a multi-million dollar RDTI position.</p>
+
+  <div class="research-grid">
+    <div class="research-card">
+      <div class="rc-icon">🧠</div>
+      <div class="rc-title">AI Sweet Spots Programme</div>
+      <div class="rc-body">Longitudinal research into AI productivity uplift across neurodiverse populations — ADHD, ASD, dyslexia, and twice-exceptional profiles. Proprietary scoring methodology and intervention frameworks.</div>
+      <div class="rc-metric">4,247+ participants enrolled</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-icon">🔬</div>
+      <div class="rc-title">Registered R&D Activities</div>
+      <div class="rc-body">Multiple registered R&D activities under the Australian Government R&D Tax Incentive scheme. FY22–26 portfolio spanning AI research, BCI/neural signal processing, and autonomous system development.</div>
+      <div class="rc-metric">~$2.56M 4-year RDTI position</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-icon">⚖️</div>
+      <div class="rc-title">Patent Portfolio</div>
+      <div class="rc-body">Family F patent cluster anchoring ConsentX — identity, consent, and personal data sovereignty. Active prosecution timeline with international filing strategy in progress.</div>
+      <div class="rc-metric">Multiple patent families · Active prosecution</div>
+    </div>
+    <div class="research-card">
+      <div class="rc-icon">📡</div>
+      <div class="rc-title">Neural & BCI Research</div>
+      <div class="rc-body">MyNeuralSignal tracks the intersection of brain-computer interfaces and human augmentation. Research-grade IP asset with publication pipeline and commercial licensing pathway.</div>
+      <div class="rc-metric">Publication register · 8 works</div>
+    </div>
+  </div>
+</section>
+
+<div class="infra-strip" id="infrastructure">
+  <div class="infra-inner">
+    <div class="infra-text">
+      <div class="section-eyebrow">Infrastructure</div>
+      <h2 class="section-title" style="color:white">Autonomous OS<br>at L23</h2>
+      <p class="section-sub">T4H runs on a fully autonomous execution spine — bridge, Lambda, EventBridge, Supabase — operating all 27 active businesses on 60-minute harvest/govern loops without manual intervention.</p>
+    </div>
+    <div class="infra-stack">
+      <div class="stack-row">
+        <span class="stack-label">Bridge</span>
+        <span class="stack-val">AWS API Gateway → Lambda → Supabase</span>
+        <span class="stack-badge">LIVE</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Autonomy</span>
+        <span class="stack-val">L23 · 25 cmd_ RPCs · 10 EventBridge rules</span>
+        <span class="stack-badge">LIVE</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">CRM</span>
+        <span class="stack-val">106 accounts · 323 events · 4 archetypes</span>
+        <span class="stack-badge">LIVE</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Commerce</span>
+        <span class="stack-val">6 Stripe brands · 119 products/prices</span>
+        <span class="stack-badge">LIVE</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Agents</span>
+        <span class="stack-val">20,000+ agents · TrojanOz · Neural Ennead</span>
+        <span class="stack-badge">LIVE</span>
+      </div>
+      <div class="stack-row">
+        <span class="stack-label">Infra</span>
+        <span class="stack-val">AWS ap-southeast-2 · Vercel · GitHub TML-4PM</span>
+        <span class="stack-badge">AU</span>
+      </div>
+    </div>
+  </div>
 </div>
 
-<section class="section" id="contact">
-  <div class="section-tag">Get in Touch</div>
-  <h2 class="section-title">Contact Us</h2>
-  <p class="section-sub">Fill in the form and we'll be in touch within 24 hours.</p>
-  <div class="contact-wrap">
+<section class="section" id="about">
+  <div class="section-eyebrow">About</div>
+  <h2 class="section-title">Founder & Director</h2>
+  <p class="section-sub">T4H is a solo-founder operation. One director, one autonomous execution partner, 28 businesses.</p>
+
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-avatar">👤</div>
+      <div class="about-name">Troy Martin</div>
+      <div class="about-role">Sole Director · Tech 4 Humanity Pty Ltd</div>
+      <div class="about-badges">
+        <div class="about-badge">ABN 61 605 746 618</div>
+        <div class="about-badge">AGSVA NV2 Clearance</div>
+        <div class="about-badge">Sydney, New South Wales</div>
+        <div class="about-badge">R&D Tax Incentive Registrant</div>
+      </div>
+    </div>
+    <div class="about-body">
+      <p>Tech 4 Humanity was founded to prove a single thesis: that AI, applied at the intersection of neurodiversity and human productivity, creates compounding advantage — for individuals, organisations, and society.</p>
+      <p>The portfolio spans research IP, commercial SaaS, consumer apps, and social impact ventures. Every business is connected to the same autonomous execution spine, research data layer, and commercial infrastructure — operating as a coordinated system, not a collection of isolated projects.</p>
+      <p>T4H holds AGSVA NV2 security clearance, enabling engagement with defence, government, and sensitive data environments. The AI Sweet Spots research programme — 4,247+ participants and growing — is the core IP anchor across multiple registered R&D activities.</p>
+      <p>All advisory, research, and commercial engagements run through Tech 4 Humanity Pty Ltd.</p>
+    </div>
+  </div>
+</section>
+
+<div class="contact-bg" id="contact">
+  <div class="contact-inner">
     <div>
-      <div class="success-banner" id="success-msg">✓ Thanks! We'll be in touch within 24 hours.</div>
+      <div class="section-eyebrow">Contact</div>
+      <h2 class="section-title">Request a Briefing</h2>
+      <p class="section-sub">Advisory engagements, research partnerships, IP licensing, or press. We respond within 24 hours.</p>
+      <div class="contact-details">
+        <div class="cd-row">
+          <span class="cd-icon">📧</span>
+          <div class="cd-text"><strong>Email</strong>hello@tech4humanity.com.au</div>
+        </div>
+        <div class="cd-row">
+          <span class="cd-icon">📍</span>
+          <div class="cd-text"><strong>Location</strong>Sydney, New South Wales, Australia</div>
+        </div>
+        <div class="cd-row">
+          <span class="cd-icon">🏢</span>
+          <div class="cd-text"><strong>Entity</strong>Tech 4 Humanity Pty Ltd · ABN 61 605 746 618</div>
+        </div>
+        <div class="cd-row">
+          <span class="cd-icon">🔐</span>
+          <div class="cd-text"><strong>Clearance</strong>AGSVA NV2 — Defence & Government engagements welcome</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="success-banner" id="success-msg">✓ Message sent. We'll be in touch within 24 hours.</div>
       <div class="form-group"><label>Your Name</label><input type="text" id="cf-name" placeholder="Jane Smith"></div>
       <div class="form-group"><label>Email</label><input type="email" id="cf-email" placeholder="jane@example.com"></div>
-      <div class="form-group"><label>Phone</label><input type="tel" id="cf-phone" placeholder="+61 4xx xxx xxx"></div>
-      <div class="form-group"><label>Message</label><textarea id="cf-msg" placeholder="Tell us what you need..."></textarea></div>
+      <div class="form-group"><label>Organisation</label><input type="text" id="cf-org" placeholder="Company or Agency"></div>
+      <div class="form-group"><label>Enquiry Type</label>
+        <select id="cf-type" style="background:rgba(255,255,255,0.06);color:white">
+          <option value="" style="background:#1a3a5c">Select...</option>
+          <option value="advisory" style="background:#1a3a5c">Advisory / Consulting</option>
+          <option value="research" style="background:#1a3a5c">Research Partnership</option>
+          <option value="ip" style="background:#1a3a5c">IP Licensing</option>
+          <option value="investment" style="background:#1a3a5c">Investment / Partnership</option>
+          <option value="media" style="background:#1a3a5c">Media / Press</option>
+          <option value="other" style="background:#1a3a5c">Other</option>
+        </select>
+      </div>
+      <div class="form-group"><label>Message</label><textarea id="cf-msg" placeholder="Briefly describe your enquiry..."></textarea></div>
       <button class="form-submit" onclick="submitContact()">Send Message</button>
     </div>
-    <div class="contact-info">
-      <h3>Get in Touch</h3>
-      <div class="contact-item"><div class="contact-item-icon">📧</div><div><div class="contact-item-label">Email</div><div class="contact-item-text">hello@tech4humanity.com.au</div></div></div>
-      <div class="contact-item"><div class="contact-item-icon">📍</div><div><div class="contact-item-label">Location</div><div class="contact-item-text">Sydney, Australia</div></div></div>
-      <div class="contact-item"><div class="contact-item-icon">🏢</div><div><div class="contact-item-label">ABN</div><div class="contact-item-text">61 605 746 618</div></div></div>
-      <div class="contact-item"><div class="contact-item-icon">🌐</div><div><div class="contact-item-label">Part of T4H Portfolio</div><div class="contact-item-text">tech4humanity.com.au</div></div></div>
-    </div>
   </div>
-</section>
+</div>
 
 <footer>
-  <strong>Tech for Humanity</strong> · A Tech for Humanity Company · ABN 61 605 746 618 · Sydney, Australia
+  <strong>Tech 4 Humanity Pty Ltd</strong> · ABN 61 605 746 618 · Sydney, Australia · <a href="mailto:hello@tech4humanity.com.au" style="color:rgba(255,255,255,0.4)">hello@tech4humanity.com.au</a>
+  <div class="footer-links">
+    <a href="https://workfamilyai.com.au">WorkFamilyAI</a>
+    <a href="https://ahc.holo-org.com">AHC</a>
+    <a href="https://holo-org.com">HoloOrg</a>
+    <a href="https://outcomeready.com.au">OutcomeReady</a>
+    <a href="https://enterau.com.au">EnterAU</a>
+  </div>
 </footer>
 
 <script>
   const BRIDGE = 'https://m5oqj21chd.execute-api.ap-southeast-2.amazonaws.com/lambda/invoke';
-  const SOURCE = 'tech-for-humanity';
+  const SOURCE = 'tech4humanity-main';
 
   async function saveLead(data) {
     try {
       const meta = JSON.stringify(data.metadata || {});
-      const sql = `INSERT INTO cap_leads (email, name, phone, source, status, metadata) VALUES ('${(data.email||'').replace(/'/g,"''")}',' ${(data.name||'').replace(/'/g,"''")}',' ${(data.phone||'').replace(/'/g,"''")}',' ${SOURCE}','new','${meta.replace(/'/g,"''")}'::jsonb) RETURNING id`;
+      const sql = `INSERT INTO cap_leads (email, name, source, status, metadata) VALUES ('${(data.email||'').replace(/'/g,"''")}', '${(data.name||'').replace(/'/g,"''")}', '${SOURCE}', 'new', '${meta.replace(/'/g,"''")}'::jsonb) RETURNING id`;
       const r = await fetch(BRIDGE, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fn:'troy-sql-executor',sql})});
       const d = await r.json();
       return d.rows?.[0]?.id || null;
@@ -181,21 +456,20 @@
   }
 
   async function submitContact() {
-    const name  = document.getElementById('cf-name').value.trim();
+    const name = document.getElementById('cf-name').value.trim();
     const email = document.getElementById('cf-email').value.trim();
-    const phone = document.getElementById('cf-phone').value.trim();
-    const msg   = document.getElementById('cf-msg').value.trim();
+    const org = document.getElementById('cf-org').value.trim();
+    const type = document.getElementById('cf-type').value;
+    const msg = document.getElementById('cf-msg').value.trim();
     if (!name) { alert('Please enter your name.'); return; }
-    if (!email && !phone) { alert('Please enter an email or phone number.'); return; }
+    if (!email) { alert('Please enter your email.'); return; }
     const btn = document.querySelector('.form-submit');
     btn.textContent = 'Sending...'; btn.disabled = true;
-    await saveLead({ name, email, phone, metadata: { type:'enquiry', message: msg } });
+    await saveLead({ name, email, metadata: { org, type, message: msg } });
     btn.textContent = 'Send Message'; btn.disabled = false;
     document.getElementById('success-msg').style.display = 'block';
-    document.getElementById('cf-name').value = '';
-    document.getElementById('cf-email').value = '';
-    document.getElementById('cf-phone').value = '';
-    document.getElementById('cf-msg').value = '';
+    ['cf-name','cf-email','cf-org','cf-msg'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('cf-type').value = '';
   }
 </script>
 </body>
