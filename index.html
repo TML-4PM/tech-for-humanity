@@ -17,7 +17,7 @@
   <meta property="og:type" content="website">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -488,6 +488,60 @@
     .delay-2 { animation-delay: 0.2s; }
     .delay-3 { animation-delay: 0.3s; }
     .delay-4 { animation-delay: 0.4s; }
+  
+    /* ── T4H PREMIUM VISUAL UPGRADE v2 ── */
+    :root {
+      --indigo:  #4F7BFF;
+      --violet:  #8C5BFF;
+      --cyan:    #20D9FF;
+    }
+    /* Stronger hero background gradient */
+    .hero-mesh {
+      background:
+        radial-gradient(ellipse 70% 55% at 50% 0%, rgba(79,123,255,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 40% at 85% 15%, rgba(140,91,255,0.09) 0%, transparent 50%),
+        radial-gradient(ellipse 35% 35% at 15% 80%, rgba(32,217,255,0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 50% 100%, rgba(140,91,255,0.05) 0%, transparent 60%);
+    }
+    /* Signal-wave decorative strip */
+    .signal-strip {
+      display: flex; align-items: center; gap: 6px;
+      margin: 1.5rem auto 2rem;
+      max-width: 240px;
+    }
+    .signal-strip span {
+      height: 3px; border-radius: 99px; flex: 1;
+      background: var(--indigo);
+      opacity: 0.5;
+    }
+    .signal-strip span:nth-child(2) { opacity: 0.8; background: var(--cyan); }
+    .signal-strip span:nth-child(3) { opacity: 0.6; background: var(--violet); }
+    .signal-strip span:nth-child(4) { opacity: 0.4; }
+    .signal-strip span:nth-child(5) { opacity: 0.25; }
+    /* Colour-blocked stat pills */
+    .stat-pill-grid {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      justify-content: center; margin: 2rem 0;
+    }
+    .stat-pill {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.45rem 1rem;
+      border-radius: 99px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      font-size: 0.8rem; font-weight: 500;
+      color: rgba(255,255,255,0.75);
+      backdrop-filter: blur(8px);
+    }
+    .stat-pill .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+    }
+    /* Group tag colour chips */
+    .group-chip { display: inline-flex; align-items: center; gap: 0.3rem;
+      padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.05em; text-transform: uppercase;
+    }
+
   </style>
 </head>
 <body>
