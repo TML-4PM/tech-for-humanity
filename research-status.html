@@ -1,460 +1,240 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>T4H Research Hub — Asset Status</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>T4H Research Engine — Live Status</title>
 <style>
-:root {
-  --bg:        #0f1117;
-  --surface:   #161b22;
-  --surface2:  #1c2128;
-  --border:    rgba(255,255,255,0.08);
-  --text:      #e6edf3;
-  --muted:     #848d97;
-  --faint:     #3d444d;
-  --green:     #3fb950;
-  --green-bg:  rgba(63,185,80,0.12);
-  --amber:     #d29922;
-  --amber-bg:  rgba(210,153,34,0.12);
-  --red:       #f85149;
-  --primary:   #58a6ff;
-  --primary-bg:rgba(88,166,255,0.1);
-  --radius:    6px;
-  --font: 'Inter', system-ui, sans-serif;
+:root{
+  --bg:#0b0d12; --panel:#11141b; --panel2:#161a22; --line:#242a35;
+  --text:#e8ecf2; --mute:#8a94a6; --accent:#7bd88f; --amber:#f5c86a; --red:#e26a6a;
+  --blue:#6fb6ff; --purple:#b08cff;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font); background: var(--bg); color: var(--text); font-size: 13px; line-height: 1.5; min-height: 100vh; }
-
-.page { max-width: 1200px; margin: 0 auto; padding: 24px 20px; }
-
-.header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
-.header-left h1 { font-size: 1.1rem; font-weight: 700; color: var(--text); letter-spacing: -0.02em; }
-.header-left .sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
-.header-right { display: flex; gap: 8px; align-items: center; }
-.btn-ghost { padding: 5px 12px; border-radius: var(--radius); border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; font-size: 0.75rem; font-family: var(--font); transition: all .15s; }
-.btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
-
-.kpi-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-bottom: 20px; }
-.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px; }
-.kpi-val { font-size: 1.6rem; font-weight: 700; line-height: 1; letter-spacing: -0.03em; }
-.kpi-val.green { color: var(--green); }
-.kpi-val.amber { color: var(--amber); }
-.kpi-val.blue  { color: var(--primary); }
-.kpi-val.white { color: var(--text); }
-.kpi-label { font-size: 0.68rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: 0.05em; }
-
-.master-progress { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; }
-.mp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-.mp-title { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
-.mp-pct { font-size: 0.9rem; font-weight: 700; color: var(--primary); }
-.track { background: var(--faint); border-radius: 100px; height: 6px; overflow: hidden; }
-.fill { height: 100%; border-radius: 100px; background: var(--green); transition: width .6s ease; }
-.fill.partial { background: linear-gradient(90deg, var(--green) 0%, var(--amber) 100%); }
-
-.tabs { display: flex; gap: 2px; margin-bottom: 16px; border-bottom: 1px solid var(--border); }
-.tab { padding: 7px 14px; border-radius: var(--radius) var(--radius) 0 0; cursor: pointer; font-size: 0.78rem; font-weight: 500; color: var(--muted); border: 1px solid transparent; border-bottom: none; transition: all .15s; background: none; font-family: var(--font); }
-.tab:hover { color: var(--text); }
-.tab.active { background: var(--surface); color: var(--text); border-color: var(--border); border-bottom-color: var(--surface); margin-bottom: -1px; }
-.panel { display: none; }
-.panel.active { display: block; }
-
-.area-table { width: 100%; border-collapse: collapse; }
-.area-table th { padding: 7px 10px; text-align: left; font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--border); white-space: nowrap; }
-.area-row td { padding: 10px 10px; border-bottom: 1px solid var(--faint); vertical-align: middle; cursor: pointer; transition: background .1s; }
-.area-row:hover td { background: var(--surface); }
-.area-row.open td { background: var(--surface); }
-.code { font-size: 0.72rem; font-weight: 700; color: var(--muted); font-variant-numeric: tabular-nums; }
-.area-name { font-weight: 600; font-size: 0.82rem; }
-.num-green { color: var(--green); font-weight: 700; font-variant-numeric: tabular-nums; }
-.num-amber { color: var(--amber); font-variant-numeric: tabular-nums; }
-.mini-track { background: var(--faint); border-radius: 100px; height: 5px; width: 72px; display: inline-block; vertical-align: middle; overflow: hidden; }
-.mini-fill { height: 100%; border-radius: 100px; background: var(--green); }
-.pct-text { font-size: 0.72rem; color: var(--muted); margin-left: 6px; font-variant-numeric: tabular-nums; }
-.badge { padding: 2px 7px; border-radius: 100px; font-size: 0.67rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-.badge-active { background: var(--green-bg); color: var(--green); }
-.badge-amber  { background: var(--amber-bg); color: var(--amber); }
-.chevron { font-size: 0.65rem; color: var(--faint); transition: transform .2s; margin-right: 4px; display: inline-block; }
-.area-row.open .chevron { transform: rotate(90deg); }
-
-.asset-expand { display: none; }
-.asset-expand.open { display: table-row-group; }
-.asset-expand td { padding: 0 !important; border-bottom: none !important; }
-.asset-inner { background: var(--surface2); border-left: 2px solid var(--green); margin: 0; padding: 10px 14px 14px 24px; }
-.asset-inner.no-assets { border-left-color: var(--amber); }
-.asset-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; margin-top: 10px; }
-.asset-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 9px 11px; }
-.asset-card.done { border-color: rgba(63,185,80,0.3); }
-.asset-card.missing { border-color: var(--faint); opacity: 0.55; }
-.asset-type-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
-.asset-type-name  { font-size: 0.75rem; color: var(--text); margin-top: 2px; }
-.asset-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
-.dot-green { background: var(--green); }
-.dot-amber { background: var(--amber); }
-.expand-hint { font-size: 0.72rem; color: var(--muted); margin-bottom: 8px; }
-.gap-alert { font-size: 0.72rem; color: var(--amber); margin-top: 8px; padding: 6px 10px; background: var(--amber-bg); border-radius: var(--radius); }
-
-.types-wrap { padding: 4px 0; }
-.types-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 14px; }
-.types-header h3 { font-size: 0.82rem; font-weight: 600; }
-.types-header .sub { font-size: 0.72rem; color: var(--muted); }
-.types-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
-.type-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px; }
-.type-tag { font-size: 0.65rem; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-.type-full { font-size: 0.8rem; font-weight: 600; color: var(--text); margin-bottom: 10px; }
-.type-big { font-size: 1.5rem; font-weight: 800; color: var(--green); letter-spacing: -0.03em; line-height: 1; }
-.type-of { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
-.type-gap { font-size: 0.68rem; color: var(--amber); margin-top: 6px; }
-
-.sprints-wrap { display: grid; gap: 12px; }
-.sprint-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
-.sprint-card.done { border-color: rgba(63,185,80,0.25); }
-.sprint-card.next { border-color: rgba(88,166,255,0.25); }
-.sprint-card.scale { border-color: rgba(210,153,34,0.25); }
-.sprint-card.future { border-color: var(--faint); opacity: 0.7; }
-.sprint-icon { font-size: 1rem; margin-right: 6px; }
-.sprint-title { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
-.sprint-meta { font-size: 0.72rem; color: var(--muted); margin-bottom: 10px; }
-.sprint-target { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; margin-bottom: 10px; }
-.sprint-target.green-t { background: var(--green-bg); color: var(--green); }
-.sprint-target.blue-t  { background: var(--primary-bg); color: var(--primary); }
-.sprint-target.amber-t { background: var(--amber-bg); color: var(--amber); }
-.sprint-items { font-size: 0.78rem; color: var(--muted); line-height: 2; }
-.sprint-items .done-tag { color: var(--green); font-weight: 700; margin-right: 4px; }
-.sprint-items .todo-tag { color: var(--primary); font-weight: 700; margin-right: 4px; }
-.sprint-items .need-tag { color: var(--amber); font-weight: 700; margin-right: 4px; }
-
-.gaps-wrap { display: grid; gap: 10px; }
-.gap-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: flex; align-items: flex-start; gap: 12px; }
-.gap-card.critical { border-left: 3px solid var(--red); }
-.gap-card.high     { border-left: 3px solid var(--amber); }
-.gap-card.medium   { border-left: 3px solid var(--primary); }
-.gap-badge { font-size: 0.63rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; padding: 2px 6px; border-radius: 3px; white-space: nowrap; margin-top: 2px; }
-.gap-badge.crit  { background: rgba(248,81,73,0.15); color: var(--red); }
-.gap-badge.hi    { background: var(--amber-bg); color: var(--amber); }
-.gap-badge.med   { background: var(--primary-bg); color: var(--primary); }
-.gap-body { flex: 1; }
-.gap-title { font-size: 0.82rem; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-.gap-desc  { font-size: 0.75rem; color: var(--muted); line-height: 1.6; }
-.gap-count { font-size: 0.72rem; font-weight: 700; color: var(--amber); margin-top: 5px; }
-
-@media (max-width: 640px) {
-  .kpi-row { grid-template-columns: repeat(2, 1fr); }
-  .asset-grid { grid-template-columns: repeat(2, 1fr); }
-  .types-grid { grid-template-columns: repeat(2, 1fr); }
-  .area-table th:nth-child(4), .area-table td:nth-child(4),
-  .area-table th:nth-child(5), .area-table td:nth-child(5) { display: none; }
-}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,sans-serif;background:var(--bg);color:var(--text)}
+.wrap{max-width:1400px;margin:0 auto;padding:24px}
+h1{margin:0 0 4px;font-size:26px;letter-spacing:-0.02em}
+.sub{color:var(--mute);margin-bottom:24px;font-size:13px}
+.sub a{color:var(--blue);text-decoration:none}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .n{font-size:26px;font-weight:600;letter-spacing:-0.02em}
+.kpi .l{color:var(--mute);font-size:11px;text-transform:uppercase;letter-spacing:0.08em;margin-top:4px}
+.kpi.green .n{color:var(--accent)} .kpi.amber .n{color:var(--amber)} .kpi.red .n{color:var(--red)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px}
+.card h2{margin:0 0 14px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--mute)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-weight:500;color:var(--mute);padding:8px 10px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:0.06em}
+td{padding:10px;border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--panel2)}
+td.code{font-family:ui-monospace,Menlo,monospace;font-size:12px;color:var(--mute)}
+.bar{position:relative;height:6px;background:#1b2028;border-radius:3px;overflow:hidden;min-width:80px}
+.bar>i{display:block;height:100%;background:var(--accent);border-radius:3px;transition:width 0.3s}
+.bar.amber>i{background:var(--amber)} .bar.red>i{background:var(--red)}
+.pct{font-variant-numeric:tabular-nums;color:var(--mute);font-size:12px}
+.tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:11px;font-weight:500;letter-spacing:0.02em}
+.tag.g{background:rgba(123,216,143,0.12);color:var(--accent)}
+.tag.a{background:rgba(245,200,106,0.12);color:var(--amber)}
+.tag.r{background:rgba(226,106,106,0.12);color:var(--red)}
+.matrix{margin-top:28px}
+.matrix h2{margin:0 0 14px;font-size:15px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:var(--mute)}
+.areasel{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.areasel button{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:7px 13px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit}
+.areasel button:hover{border-color:var(--blue)}
+.areasel button.on{background:var(--blue);border-color:var(--blue);color:#0b0d12;font-weight:500}
+.mtx{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.mtx table{font-size:12px}
+.mtx th{padding:10px 8px;background:var(--panel2)}
+.mtx td{padding:8px;text-align:center}
+.mtx td.label{text-align:left;font-size:12px;color:var(--text)}
+.mtx td.label .sc{color:var(--mute);font-size:11px;font-family:ui-monospace,monospace;display:block}
+.cell{display:inline-block;width:22px;height:22px;border-radius:4px;cursor:pointer;vertical-align:middle}
+.cell.g{background:var(--accent)} .cell.a{background:rgba(245,200,106,0.25);border:1px solid rgba(245,200,106,0.4)} .cell.r{background:var(--red)}
+.cell:hover{transform:scale(1.15)}
+.loading{color:var(--mute);padding:20px;text-align:center}
+.err{color:var(--red);padding:20px;text-align:center;font-size:13px}
+.legend{display:flex;gap:16px;align-items:center;color:var(--mute);font-size:11px;margin-top:8px}
+.legend .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px;vertical-align:middle}
+.footer{text-align:center;color:var(--mute);font-size:11px;margin-top:32px;padding-top:20px;border-top:1px solid var(--line)}
+.footer a{color:var(--blue);text-decoration:none}
+.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px;flex-wrap:wrap}
+.btn{background:var(--panel);color:var(--text);border:1px solid var(--line);padding:8px 14px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;text-decoration:none;display:inline-block}
+.btn:hover{border-color:var(--blue)}
+#detail{margin-top:14px;padding:14px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;display:none}
+#detail .title{font-weight:600;margin-bottom:6px}
+#detail .meta{color:var(--mute);font-size:12px}
+#detail .close{float:right;cursor:pointer;color:var(--mute);font-size:18px;line-height:1}
 </style>
 </head>
 <body>
-<div class="page">
+<div class="wrap">
+  <h1>🧬 T4H Research Engine</h1>
+  <div class="sub">Live status · data from <code>public.research_asset_register</code> · <a href="/api/research-csv" download>Download CSV</a> · Last load: <span id="ts">…</span></div>
 
-  <div class="header">
-    <div class="header-left">
-      <h1>T4H Research IP — Asset Status</h1>
-      <div class="sub">10 research areas · 810 total assets · 9 asset types · April 2026</div>
-    </div>
-    <div class="header-right">
-      <button class="btn-ghost" onclick="expandAll()">Expand all</button>
-      <button class="btn-ghost" onclick="collapseAll()">Collapse</button>
-    </div>
-  </div>
+  <div class="kpis" id="kpis"><div class="loading">Loading…</div></div>
 
-  <div class="kpi-row">
-    <div class="kpi"><div class="kpi-val green">75</div><div class="kpi-label">GREEN</div></div>
-    <div class="kpi"><div class="kpi-val amber">735</div><div class="kpi-label">AMBER</div></div>
-    <div class="kpi"><div class="kpi-val blue">9.3%</div><div class="kpi-label">Complete</div></div>
-    <div class="kpi"><div class="kpi-val white">810</div><div class="kpi-label">Total Assets</div></div>
-    <div class="kpi"><div class="kpi-val white">5</div><div class="kpi-label">Active Areas</div></div>
-    <div class="kpi"><div class="kpi-val amber">5</div><div class="kpi-label">Not Started</div></div>
-  </div>
-
-  <div class="master-progress">
-    <div class="mp-header">
-      <span class="mp-title">Overall Completion</span>
-      <span class="mp-pct">9.3% · Wave 1 complete</span>
-    </div>
-    <div class="track"><div class="fill partial" style="width:9.3%"></div></div>
-  </div>
-
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('areas', this)">Research Areas</button>
-    <button class="tab" onclick="showTab('types', this)">Asset Types</button>
-    <button class="tab" onclick="showTab('sprints', this)">Sprint Plan</button>
-    <button class="tab" onclick="showTab('gaps', this)">⚠ Gaps</button>
-  </div>
-
-  <!-- AREAS TAB -->
-  <div class="panel active" id="panel-areas">
-    <table class="area-table">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Code</th>
-          <th>Research Area</th>
-          <th>GREEN</th>
-          <th>AMBER</th>
-          <th>Progress</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody id="area-tbody"></tbody>
-    </table>
-  </div>
-
-  <!-- TYPES TAB -->
-  <div class="panel" id="panel-types">
-    <div class="types-wrap">
-      <div class="types-header">
-        <h3>GREEN assets by type <span style="color:var(--muted);font-weight:400">across all areas</span></h3>
-        <span class="sub">75 GREEN · 9 types active · 0 types at 100%</span>
+  <div class="grid">
+    <div class="card">
+      <h2>Research areas — completion</h2>
+      <div id="areas"><div class="loading">Loading areas…</div></div>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--accent)"></i>GREEN (shipped)</span>
+        <span><i class="sw" style="background:var(--amber)"></i>AMBER (pending)</span>
+        <span><i class="sw" style="background:var(--red)"></i>RED (blocked)</span>
       </div>
-      <div class="types-grid" id="types-grid"></div>
+    </div>
+
+    <div class="card">
+      <h2>Asset-type bottlenecks</h2>
+      <div id="atypes"><div class="loading">Loading asset types…</div></div>
     </div>
   </div>
 
-  <!-- SPRINTS TAB -->
-  <div class="panel" id="panel-sprints">
-    <div class="sprints-wrap">
-      <div class="sprint-card done">
-        <div class="sprint-title"><span class="sprint-icon">✅</span>Session Complete — Wave 1</div>
-        <div class="sprint-meta">April 2026</div>
-        <span class="sprint-target green-t">+27 assets this session</span>
-        <div class="sprint-items">
-          <div><span class="done-tag">DONE</span>9× AT-PAPER — seeded subtopics, full working papers</div>
-          <div><span class="done-tag">DONE</span>9× AT-ABS + 9× AT-POST + 9× AT-DATA (derivatives)</div>
-          <div><span class="done-tag">DONE</span>9× AT-SCORE + 9× AT-SCHEMA (scoring models + schemas)</div>
-          <div><span class="done-tag">DONE</span>9 .docx documents validated and downloadable</div>
-        </div>
+  <div class="matrix">
+    <div class="toolbar">
+      <h2 style="margin:0">Area × Subtopic × Asset-type matrix</h2>
+      <div>
+        <a href="/api/research-csv" class="btn" download>CSV</a>
+        <a href="https://github.com/TML-4PM/tech-for-humanity" class="btn" target="_blank">Repo</a>
       </div>
-      <div class="sprint-card next">
-        <div class="sprint-title"><span class="sprint-icon">🔜</span>Sprint 1 — Next Session</div>
-        <div class="sprint-meta">Ready to start · no new data required</div>
-        <span class="sprint-target blue-t">Target: +100 assets → ~175 GREEN / 21%</span>
-        <div class="sprint-items">
-          <div><span class="todo-tag">TODO</span>AT-ASSESS × 9 seeded subtopics (currently only 2 GREEN)</div>
-          <div><span class="todo-tag">TODO</span>AT-IMPL × A02.S06, A06.S01, A08.S01 — governance + trust spine</div>
-          <div><span class="todo-tag">TODO</span>AT-DASH × A02.S02, A02.S06, A09.S05, A09.S06</div>
-          <div><span class="todo-tag">TODO</span>A01 S05–S08 seeding from ASS dataset</div>
-        </div>
-      </div>
-      <div class="sprint-card scale">
-        <div class="sprint-title"><span class="sprint-icon">🔜</span>Sprint 2 — Scale</div>
-        <div class="sprint-meta">Requires platform validation + pilot expansion</div>
-        <span class="sprint-target amber-t">Target: +150 assets → ~325 GREEN / 40%</span>
-        <div class="sprint-items">
-          <div><span class="need-tag">NEED</span>A06 S02–S09 from MNS platform validation</div>
-          <div><span class="need-tag">NEED</span>A08 S02–S09 from Ennead pilot expansion (10 orgs)</div>
-          <div><span class="need-tag">NEED</span>A09 S01–S04, S07–S09 from Bridge infrastructure docs</div>
-          <div><span class="need-tag">NEED</span>A10 S01–S03 Digital Child Protection seeding</div>
-        </div>
-      </div>
-      <div class="sprint-card future">
-        <div class="sprint-title"><span class="sprint-icon">📅</span>Sprint 3–4 — Research Intensive</div>
-        <div class="sprint-meta">16–24 weeks · requires new data collection</div>
-        <div class="sprint-items">
-          <div><span class="need-tag">REQ</span>A03 EEG/medication cohort · A04 X-Overpoints economic model</div>
-          <div><span class="need-tag">REQ</span>A05 Human Biology clinical cohort · A07 UBI expert panel</div>
-          <div><span class="need-tag">REQ</span>A01 S09 RCT protocol · Full A10 DCP study production</div>
-        </div>
-      </div>
+    </div>
+    <div class="areasel" id="areasel"></div>
+    <div class="mtx" id="mtx"><div class="loading">Pick an area…</div></div>
+    <div id="detail"><span class="close" onclick="this.parentElement.style.display='none'">×</span><div id="detail-body"></div></div>
+    <div class="legend">
+      <span><i class="cell g" style="width:14px;height:14px"></i> GREEN</span>
+      <span><i class="cell a" style="width:14px;height:14px"></i> AMBER</span>
+      <span><i class="cell r" style="width:14px;height:14px"></i> RED</span>
+      <span style="color:var(--mute)">· Click cell for asset detail</span>
     </div>
   </div>
 
-  <!-- GAPS TAB -->
-  <div class="panel" id="panel-gaps">
-    <div class="gaps-wrap">
-      <div class="gap-card critical">
-        <div class="gap-badge crit">Critical</div>
-        <div class="gap-body">
-          <div class="gap-title">5 research areas at 0% — A03, A04, A05, A07, A10</div>
-          <div class="gap-desc">Extreme AI Effects, X-Overpoints, Human Biology × AI, Unified Biological Intelligence, and Digital Child Protection have zero GREEN assets. Combined gap: 405 assets unstarted.</div>
-          <div class="gap-count">405 assets blocked · Sprint 3–4 required for most</div>
-        </div>
-      </div>
-      <div class="gap-card critical">
-        <div class="gap-badge crit">Critical</div>
-        <div class="gap-body">
-          <div class="gap-title">AT-ASSESS bottleneck — only 2 of 90 GREEN</div>
-          <div class="gap-desc">Assessment type is the lowest-completion across all types. Sprint 1 must seed all 9 subtopics for AT-ASSESS to unlock downstream AT-IMPL and AT-DASH assets.</div>
-          <div class="gap-count">2 / 90 GREEN · blocks governance + implementation layer</div>
-        </div>
-      </div>
-      <div class="gap-card high">
-        <div class="gap-badge hi">High</div>
-        <div class="gap-body">
-          <div class="gap-title">AT-IMPL (8) and AT-DASH (8) below other types</div>
-          <div class="gap-desc">Implementation and dashboard assets lag AT-PAPER/AT-ABS/AT-POST which are at 9–10. These are the highest-value output types for CC integration and client delivery.</div>
-          <div class="gap-count">8 / 90 each · Sprint 1 target: A02.S06, A06.S01, A08.S01</div>
-        </div>
-      </div>
-      <div class="gap-card high">
-        <div class="gap-badge hi">High</div>
-        <div class="gap-body">
-          <div class="gap-title">A01 S05–S08 not seeded (AI Sweet Spots, highest active area)</div>
-          <div class="gap-desc">A01 leads at 33% but 4 of 9 subtopics (S05–S08) remain unseeded. These are available from ASS dataset — zero new data required, just Sprint 1 execution.</div>
-          <div class="gap-count">~36 assets available now · ASS dataset ready</div>
-        </div>
-      </div>
-      <div class="gap-card medium">
-        <div class="gap-badge med">Medium</div>
-        <div class="gap-body">
-          <div class="gap-title">No live data connection — page is static</div>
-          <div class="gap-desc">All numbers are hardcoded HTML. Next sprint will make these stale immediately. Supabase connection needed for auto-refresh against research_assets table.</div>
-          <div class="gap-count">Risk: dashboard goes stale after every sprint</div>
-        </div>
-      </div>
-      <div class="gap-card medium">
-        <div class="gap-badge med">Medium</div>
-        <div class="gap-body">
-          <div class="gap-title">A09 Methods Validation — S01–S04, S07–S09 missing</div>
-          <div class="gap-desc">6 of 9 subtopics not yet seeded. Bridge infrastructure docs are the source — already available. Sprint 2 dependency.</div>
-          <div class="gap-count">~54 assets available via Bridge docs · Sprint 2</div>
-        </div>
-      </div>
-    </div>
+  <div class="footer">
+    T4H Research Engine · 10 areas × 9 subtopics × 9 asset types = 810 cells · 
+    Data: Supabase <code>lzfgigiyqpuuxslsygjt</code> ·
+    <a href="https://github.com/TML-4PM/tech-for-humanity" target="_blank">TML-4PM/tech-for-humanity</a>
   </div>
-
 </div>
 
 <script>
-const areas = [
-  { code:"A01", name:"AI Sweet Spots",                  green:27, amber:54, status:"ACTIVE",
-    notes:"S05–S08 unseeded — available from ASS dataset now" },
-  { code:"A02", name:"CARE / CSO",                      green:16, amber:65, status:"ACTIVE",
-    notes:"S06 AT-IMPL and AT-DASH pending Sprint 1" },
-  { code:"A03", name:"Extreme AI Effects",              green:0,  amber:81, status:"AMBER",
-    notes:"Requires EEG/medication cohort — Sprint 3–4" },
-  { code:"A04", name:"X-Overpoints",                   green:0,  amber:81, status:"AMBER",
-    notes:"Requires economic model build — Sprint 3–4" },
-  { code:"A05", name:"Human Biology × AI",             green:0,  amber:81, status:"AMBER",
-    notes:"Requires clinical cohort — Sprint 3–4" },
-  { code:"A06", name:"MyNeuralSignal",                 green:8,  amber:73, status:"ACTIVE",
-    notes:"S02–S09 unlock after MNS platform validation" },
-  { code:"A07", name:"Unified Biological Intelligence",green:0,  amber:81, status:"AMBER",
-    notes:"Requires UBI expert panel — Sprint 3–4" },
-  { code:"A08", name:"Organisational Impact",          green:8,  amber:73, status:"ACTIVE",
-    notes:"S01 AT-IMPL Sprint 1 · S02–S09 after Ennead pilot" },
-  { code:"A09", name:"Methods Validation",             green:16, amber:65, status:"ACTIVE",
-    notes:"S01–S04, S07–S09 available via Bridge docs — Sprint 2" },
-  { code:"A10", name:"Digital Child Protection",       green:0,  amber:81, status:"AMBER",
-    notes:"S01–S03 seeding Sprint 2 · full study Sprint 3–4" },
-];
+const SB_URL  = "https://lzfgigiyqpuuxslsygjt.supabase.co";
+const SB_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx6ZmdpZ2l5cXB1dXhzbHN5Z2p0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ0MTc0NjksImV4cCI6MjA1OTk5MzQ2OX0.qUNzDEr2rxjRSClh5P4jeDv_18_yCCkFXTizJqNYSgg";
+const AT_ORDER = ["AT-PAPER","AT-ABS","AT-POST","AT-DATA","AT-SCORE","AT-SCHEMA","AT-IMPL","AT-DASH","AT-ASSESS"];
+const AT_LABEL = {"AT-PAPER":"Paper","AT-ABS":"Abstract","AT-POST":"Post","AT-DATA":"Data","AT-SCORE":"Score","AT-SCHEMA":"Schema","AT-IMPL":"Impl","AT-DASH":"Dash","AT-ASSESS":"Assess"};
 
-const assetTypes = [
-  { code:"AT-PAPER",  name:"Working Paper",    green:10, total:90, sprint:null },
-  { code:"AT-ABS",    name:"Abstract",         green:10, total:90, sprint:null },
-  { code:"AT-POST",   name:"Post",             green:10, total:90, sprint:null },
-  { code:"AT-DATA",   name:"Dataset",          green:9,  total:90, sprint:null },
-  { code:"AT-SCORE",  name:"Scoring Model",    green:9,  total:90, sprint:null },
-  { code:"AT-SCHEMA", name:"Schema",           green:9,  total:90, sprint:null },
-  { code:"AT-IMPL",   name:"Implementation",   green:8,  total:90, sprint:"Sprint 1" },
-  { code:"AT-DASH",   name:"Dashboard",        green:8,  total:90, sprint:"Sprint 1" },
-  { code:"AT-ASSESS", name:"Assessment",       green:2,  total:90, sprint:"Sprint 1 ⚠ bottleneck" },
-];
-
-function getAreaAssets(area) {
-  const perType = Math.floor(area.green / assetTypes.length);
-  const remainder = area.green % assetTypes.length;
-  return assetTypes.map((t, i) => ({
-    ...t,
-    areaGreen: i < remainder ? perType + 1 : perType,
-    areaTotal: 9,
-  }));
+async function sb(path){
+  const r = await fetch(`${SB_URL}/rest/v1/${path}`, {headers:{apikey:SB_ANON,Authorization:`Bearer ${SB_ANON}`}});
+  if(!r.ok) throw new Error(`${r.status} ${await r.text()}`);
+  return r.json();
 }
 
-const tbody = document.getElementById("area-tbody");
-areas.forEach((a, idx) => {
-  const pct = a.green === 0 ? 0 : Math.round((a.green / (a.green + a.amber)) * 100);
-  const badge = a.status === "ACTIVE"
-    ? '<span class="badge badge-active">ACTIVE</span>'
-    : '<span class="badge badge-amber">AMBER</span>';
+function statusCls(s){ return s==='GREEN'?'g':s==='AMBER'?'a':s==='RED'?'r':''; }
 
-  const aRow = document.createElement("tr");
-  aRow.className = "area-row";
-  aRow.dataset.idx = idx;
-  aRow.innerHTML = `
-    <td style="width:24px"><span class="chevron">▶</span></td>
-    <td><span class="code">${a.code}</span></td>
-    <td><span class="area-name">${a.name}</span></td>
-    <td><span class="num-green">${a.green}</span></td>
-    <td><span class="num-amber">${a.amber}</span></td>
-    <td>
-      <span class="mini-track"><span class="mini-fill" style="width:${pct}%"></span></span>
-      <span class="pct-text">${pct}%</span>
-    </td>
-    <td>${badge}</td>
+async function loadKPIs(){
+  const areas = await sb('v_area_completion?select=*&order=area_code');
+  const totals = areas.reduce((a,r)=>({g:a.g+r.green,am:a.am+r.amber,rd:a.rd+r.red,t:a.t+r.total}),{g:0,am:0,rd:0,t:0});
+  const pct = totals.t ? (100*totals.g/totals.t).toFixed(1) : 0;
+  document.getElementById('kpis').innerHTML = `
+    <div class="kpi"><div class="n">${totals.t}</div><div class="l">Total cells</div></div>
+    <div class="kpi green"><div class="n">${totals.g}</div><div class="l">GREEN / shipped</div></div>
+    <div class="kpi amber"><div class="n">${totals.am}</div><div class="l">AMBER / pending</div></div>
+    <div class="kpi red"><div class="n">${totals.rd}</div><div class="l">RED / blocked</div></div>
+    <div class="kpi"><div class="n">${pct}%</div><div class="l">Overall</div></div>
   `;
+  document.getElementById('ts').textContent = new Date().toLocaleString('en-AU',{timeZone:'Australia/Sydney'});
+  return areas;
+}
 
-  const assets = getAreaAssets(a);
-  const noAssets = a.green === 0;
-
-  const expandTr = document.createElement("tr");
-  expandTr.className = "asset-expand";
-  expandTr.dataset.for = idx;
-
-  const assetCards = assets.map(t => {
-    const done = t.areaGreen > 0;
-    return `<div class="asset-card ${done ? "done" : "missing"}">
-      <div class="asset-type-label">
-        <span class="asset-dot ${done ? "dot-green" : "dot-amber"}"></span>${t.code}
-      </div>
-      <div class="asset-type-name">${t.name}</div>
-      <div style="font-size:0.68rem;color:${done?"var(--green)":"var(--muted)"};margin-top:4px;font-weight:600">
-        ${done ? t.areaGreen + " / 9 ✓" : "0 / 9"}
-      </div>
-    </div>`;
-  }).join("");
-
-  expandTr.innerHTML = `<td colspan="7">
-    <div class="asset-inner ${noAssets ? "no-assets" : ""}">
-      <div class="expand-hint">${a.notes}</div>
-      <div class="asset-grid">${assetCards}</div>
-      ${noAssets ? '<div class="gap-alert">⚠ Zero assets GREEN — see Gaps tab for unlock path</div>' : ""}
-    </div>
-  </td>`;
-
-  aRow.addEventListener("click", () => {
-    const isOpen = aRow.classList.contains("open");
-    aRow.classList.toggle("open", !isOpen);
-    expandTr.classList.toggle("open", !isOpen);
+function renderAreas(areas){
+  const html = `<table><thead><tr><th>Code</th><th>Area</th><th>Progress</th><th style="text-align:right">G/T</th></tr></thead><tbody>${
+    areas.map(a=>`<tr>
+      <td class="code">${a.area_code}</td>
+      <td>${a.area_name}</td>
+      <td><div style="display:flex;gap:10px;align-items:center"><div class="bar"><i style="width:${a.pct_complete||0}%"></i></div><span class="pct">${(a.pct_complete||0).toFixed(1)}%</span></div></td>
+      <td style="text-align:right" class="code">${a.green}/${a.total}</td>
+    </tr>`).join('')
+  }</tbody></table>`;
+  document.getElementById('areas').innerHTML = html;
+  // area selector
+  document.getElementById('areasel').innerHTML = areas.map((a,i)=>
+    `<button data-area="${a.area_code}" class="${i===0?'on':''}">${a.area_code} · ${a.area_name}</button>`
+  ).join('');
+  document.querySelectorAll('#areasel button').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('#areasel button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    loadMatrix(b.dataset.area);
   });
-
-  tbody.appendChild(aRow);
-  tbody.appendChild(expandTr);
-});
-
-const tg = document.getElementById("types-grid");
-assetTypes.forEach(t => {
-  const pct = Math.round((t.green / t.total) * 100);
-  tg.innerHTML += `<div class="type-card">
-    <div class="type-tag">${t.code}</div>
-    <div class="type-full">${t.name}</div>
-    <div class="type-big">${t.green}</div>
-    <div class="type-of">${t.green} / ${t.total} GREEN · ${pct}%</div>
-    ${t.sprint ? `<div class="type-gap">⚠ ${t.sprint}</div>` : ""}
-  </div>`;
-});
-
-function showTab(id, btn) {
-  document.querySelectorAll(".panel").forEach(p => p.classList.remove("active"));
-  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
-  document.getElementById("panel-" + id).classList.add("active");
-  btn.classList.add("active");
+  loadMatrix(areas[0].area_code);
 }
 
-function expandAll() {
-  document.querySelectorAll(".area-row").forEach(r => r.classList.add("open"));
-  document.querySelectorAll(".asset-expand").forEach(e => e.classList.add("open"));
+async function loadAssetTypes(){
+  const ats = await sb('v_asset_type_progress?select=*&order=pct_complete.asc');
+  document.getElementById('atypes').innerHTML = `<table><thead><tr><th>Type</th><th>Progress</th><th style="text-align:right">G/T</th></tr></thead><tbody>${
+    ats.map(a=>`<tr>
+      <td class="code">${a.asset_type}</td>
+      <td><div style="display:flex;gap:10px;align-items:center"><div class="bar ${a.pct_complete<20?'amber':''}"><i style="width:${a.pct_complete||0}%"></i></div><span class="pct">${(a.pct_complete||0).toFixed(1)}%</span></div></td>
+      <td style="text-align:right" class="code">${a.green}/${a.total}</td>
+    </tr>`).join('')
+  }</tbody></table>`;
 }
-function collapseAll() {
-  document.querySelectorAll(".area-row").forEach(r => r.classList.remove("open"));
-  document.querySelectorAll(".asset-expand").forEach(e => e.classList.remove("open"));
+
+async function loadMatrix(area){
+  document.getElementById('mtx').innerHTML = '<div class="loading">Loading matrix…</div>';
+  const rows = await sb(`v_matrix_cells?select=*&area_code=eq.${area}&order=subgroup_code,asset_type`);
+  // Pivot: rows by subgroup, cols by asset_type
+  const subs = {};
+  rows.forEach(r=>{
+    if(!subs[r.subgroup_code]) subs[r.subgroup_code] = {name:r.subgroup_name, cells:{}};
+    subs[r.subgroup_code].cells[r.asset_type] = r;
+  });
+  const subKeys = Object.keys(subs).sort();
+  const html = `<table>
+    <thead><tr><th>Subtopic</th>${AT_ORDER.map(t=>`<th title="${AT_LABEL[t]}">${t.replace('AT-','')}</th>`).join('')}<th>%</th></tr></thead>
+    <tbody>${subKeys.map(sk=>{
+      const s = subs[sk];
+      const green = AT_ORDER.filter(t=>s.cells[t]?.status==='GREEN').length;
+      const pct = ((green/AT_ORDER.length)*100).toFixed(0);
+      return `<tr>
+        <td class="label"><span class="sc">${sk}</span>${s.name}</td>
+        ${AT_ORDER.map(t=>{
+          const c = s.cells[t];
+          if(!c) return `<td>—</td>`;
+          return `<td><div class="cell ${statusCls(c.status)}" title="${c.status}: ${(c.title||'').replace(/"/g,'&quot;')}" onclick='showDetail(${JSON.stringify(c).replace(/'/g,"&#39;")})'></div></td>`;
+        }).join('')}
+        <td class="code" style="text-align:right">${pct}%</td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+  document.getElementById('mtx').innerHTML = html;
 }
+
+function showDetail(c){
+  const d = document.getElementById('detail');
+  d.style.display='block';
+  document.getElementById('detail-body').innerHTML = `
+    <div class="title">${c.title||'(no title)'}</div>
+    <div class="meta">
+      <span class="tag ${statusCls(c.status)}">${c.status}</span>
+      <span class="code">${c.asset_code}</span> · 
+      ${c.area_name} › ${c.subgroup_name} › ${c.asset_type}
+    </div>
+    ${c.evidence_uri?`<div style="margin-top:8px"><a href="${c.evidence_uri}" target="_blank" class="btn">Open evidence ↗</a></div>`:'<div style="margin-top:8px;color:var(--mute);font-size:12px">No evidence URI</div>'}
+    ${c.last_verified?`<div class="meta" style="margin-top:6px">Verified ${new Date(c.last_verified).toLocaleDateString('en-AU')}</div>`:''}
+  `;
+}
+
+(async()=>{
+  try {
+    const areas = await loadKPIs();
+    renderAreas(areas);
+    await loadAssetTypes();
+  } catch(e){
+    document.body.innerHTML += `<div class="err">Load error: ${e.message}</div>`;
+  }
+})();
 </script>
 </body>
 </html>
